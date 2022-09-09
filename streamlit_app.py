@@ -12,8 +12,11 @@ streamlit.text('Hard-Boiled Free-Range Egg')
 fruits_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
 fruits_df = fruits_df.set_index("Fruit")
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+
 streamlit.header('FruityVice Menu')
+fruit_selection = streamlit.text_input("Which fruit do you want to search", "kiwi")
+streamlit.text(f'The user selected {fruit_selection}')
+fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_selection}")
 fruitvice_df = pandas.json_normalize(fruityvice_response.json())
 streamlit.dataframe(fruitvice_df)
 
