@@ -8,8 +8,9 @@ streamlit.text('Omega 3 & Blueberry Oatmeal')
 streamlit.text('Kale, Spinach & Rocket Smoothie')
 streamlit.text('Hard-Boiled Free-Range Egg')
 
-food_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
-food_df = food_df.set_index("Fruit")
+fruits_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
+fruits_df = fruits_df.set_index("Fruit")
 
-foods_selected = streamlit.multiselect("Select some fruits", list(food_df.index))
-streamlit.dataframe(food_df[food_df["Food"] in foods_selected])
+selected_fruits = streamlit.multiselect("Select some fruits", list(fruits_df.index))
+fruits_to_show = fruits_df[fruits_df["Food"] in selected_fruits]
+streamlit.dataframe(fruits_df)
