@@ -13,5 +13,5 @@ fruits_df = fruits_df.set_index("Fruit")
 
 streamlit.text(f'aaa {fruits_df.columns}')
 selected_fruits = streamlit.multiselect("Select some fruits", list(fruits_df.index))
-fruits_to_show = fruits_df.iloc[selected_fruits]
+fruits_to_show = fruits_df.filter(items in selected_fruits)
 streamlit.dataframe(fruits_df)
