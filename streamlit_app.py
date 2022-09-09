@@ -11,6 +11,7 @@ streamlit.text('Hard-Boiled Free-Range Egg')
 fruits_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
 fruits_df = fruits_df.set_index("Fruit")
 
+streamlit.text(f'aaa {fruits_df.columns}')
 selected_fruits = streamlit.multiselect("Select some fruits", list(fruits_df.index))
 fruits_to_show = fruits_df[fruits_df['Fruit'] in selected_fruits]
 streamlit.dataframe(fruits_df)
