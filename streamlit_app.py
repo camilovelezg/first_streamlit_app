@@ -23,11 +23,10 @@ streamlit.text('Omega 3 & Blueberry Oatmeal')
 streamlit.text('Kale, Spinach & Rocket Smoothie')
 streamlit.text('Hard-Boiled Free-Range Egg')
 
-
-
 new_fruit = streamlit.text_input("Which fruit would you like to add?", "")
-streamlit.text(f"Thank you for adding {new_fruit}")
-add_fruit(snowflake_cursor, new_fruit)
+if streamlit.button("Add fruit"):
+    streamlit.text(f"Thank you for adding {new_fruit}")
+    add_fruit(snowflake_cursor, new_fruit)
 
 if streamlit.button("Get fruit list"):
     streamlit.header("The fruit list contains:")
