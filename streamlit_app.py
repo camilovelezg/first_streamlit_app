@@ -1,8 +1,9 @@
-import streamlit
-import snowflake.connector
-
 import requests
 import pandas
+from urllib.error import URLError
+
+import streamlit
+import snowflake.connector
 
 
 streamlit.title("My parents healthy menu")
@@ -16,7 +17,7 @@ my_cursor.execute("select * from fruit_load_list")
 my_snowflake_data = my_cursor.fetchall()
 new_fruit = streamlit.text_input("Which fruit would you like to add?", "")
 streamlit.text(f"Thank you for adding {new_fruit}")
-my_cursor.execute("insert into fruit_load_list (fruit_name) values(%(new_fruit)s)", {'new_fruit': new_fruit})
+# my_cursor.execute("insert into fruit_load_list (fruit_name) values(%(new_fruit)s)", {'new_fruit': new_fruit})
 streamlit.header("The fruit list contains:")
 streamlit.dataframe(my_snowflake_data)
 
@@ -25,11 +26,18 @@ fruits_df = fruits_df.set_index("Fruit")
 
 
 streamlit.header('FruityVice Menu')
-fruit_selection = streamlit.text_input("Which fruit do you want to search", "kiwi")
-streamlit.text(f'The user selected {fruit_selection}')
-fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_selection}")
-fruitvice_df = pandas.json_normalize(fruityvice_response.json())
-streamlit.dataframe(fruitvice_df)
+try:
+    fruityvice_selection = streamlit.text_input("Which fruit do you want to search", "kiwi")
+    if not fruityvice_selection:
+       streamlit.error('Please selecet a fruit')
+    else: 
+        streamlit.text(f'The user selected {fruityvice_selection}')
+        fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{fruityvice_selection}")
+        fruitvice_df = pandas.json_normalize(fruityvice_response.json())
+        streamlit.dataframe(fruitvice_df)
+except URLError as e:
+    streamlit.error(e)
+
 
 
 selected_fruits = streamlit.multiselect("Select some fruits", list(fruits_df.index))
