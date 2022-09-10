@@ -12,7 +12,7 @@ streamlit.text('Kale, Spinach & Rocket Smoothie')
 streamlit.text('Hard-Boiled Free-Range Egg')
 
 my_cursor = snowflake.connector.connect(**streamlit.secrets["snowflake"]).cursor()
-my_cursor.execute("select count(*) from fdc_food_ingest")
+my_cursor.execute("select * from fdc_food_ingest limit 15")
 my_secret_data = my_cursor.fetchone()
 streamlit.text(my_secret_data)
 streamlit.text(type(my_secret_data))
