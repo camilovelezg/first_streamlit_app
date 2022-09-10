@@ -15,6 +15,7 @@ my_cursor = snowflake.connector.connect(**streamlit.secrets["snowflake"]).cursor
 my_cursor.execute("select count(*) from fdc_food_ingest")
 my_secret_data = my_cursor.fetchone()
 streamlit.text(my_secret_data)
+streamlit.text(type(my_secret_data))
 
 fruits_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
 fruits_df = fruits_df.set_index("Fruit")
