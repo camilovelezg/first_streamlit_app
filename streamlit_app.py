@@ -16,7 +16,7 @@ my_cursor.execute("select * from fruit_load_list")
 my_snowflake_data = my_cursor.fetchall()
 new_fruit = streamlit.text_input("Which fruit would you like to add?", "")
 streamlit.text(f"Thank you for adding {new_fruit}")
-my_cursor.execute(f"insert into fruit_load_list (fruit_name) values({new_fruit})")
+my_cursor.execute(f"insert into fruit_load_list (fruit_name) values('{new_fruit}')")
 streamlit.header("The fruit list contains:")
 streamlit.dataframe(my_snowflake_data)
 
