@@ -11,6 +11,11 @@ streamlit.text('Omega 3 & Blueberry Oatmeal')
 streamlit.text('Kale, Spinach & Rocket Smoothie')
 streamlit.text('Hard-Boiled Free-Range Egg')
 
+my_cursor = snowflake.connector.connect(**streamlit.secrets["snowflake"]).cursor()
+my_cursor.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION")
+my_secret_data = my_cursor.fetchone()
+streamlit.text(my_secret_data)
+
 fruits_df = pandas.read_csv('https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt')
 fruits_df = fruits_df.set_index("Fruit")
 
