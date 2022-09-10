@@ -1,7 +1,9 @@
-from urllib import request
-import requests
 import streamlit
+import snowflake.connector
+
+import requests
 import pandas
+
 
 streamlit.title("My parents healthy menu")
 streamlit.header('Breakfast Menu')
