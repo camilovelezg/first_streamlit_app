@@ -23,7 +23,6 @@ def add_fruits(connection, new_fruits):
             query += f"({fruit.strip()}),"
         query = query[:-1]
         streamlit.text(query)
-        streamlit.text("insert into fruit_load_list (fruit_name) values %(query)s", {'query': query})
         cursor.execute("insert into fruit_load_list (fruit_name) values %(query)s", {'query': query})
 
 
