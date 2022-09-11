@@ -19,16 +19,12 @@ def add_fruits(connection, new_fruits):
     with connection.cursor() as cursor:
         # cursor.execute("insert into fruit_load_list (fruit_name) values (%(new_fruit)s)", {'new_fruit': new_fruits})
         new_fruits = new_fruits.split(",")
-        query = ''
-        lst = []
+        values = []
         for fruit in new_fruits:
-            query += f"({fruit.strip()}),"
-            lst.append(fruit.strip())
-        query = query[:-1]
-        streamlit.text(f"insert into fruit_load_list (fruit_name) values {query}")
+            values.append(fruit.strip())
+        query = "insert into fruit_load_list (fruit_name) values (" + "),(".join(["%s" for _ in values]) + ")"
         streamlit.text(query)
-        cursor.execute("insert into fruit_load_list (fruit_name) values %s", lst)
-        streamlit.text(cursor.query.decode('utf-8'))
+        cursor.execute(query, values)
 
 
 streamlit.title("My parents healthy menu")
