@@ -29,9 +29,6 @@ def add_fruits(connection, new_fruits):
 
 streamlit.title("My parents healthy menu")
 streamlit.header('Breakfast Menu')
-streamlit.text('Omega 3 & Blueberry Oatmeal')
-streamlit.text('Kale, Spinach & Rocket Smoothie')
-streamlit.text('Hard-Boiled Free-Range Egg')
 
 new_fruits = streamlit.text_input("Which fruits would you like to add?", "")
 if streamlit.button("Add fruits"):
