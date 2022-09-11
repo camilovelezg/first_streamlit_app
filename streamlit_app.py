@@ -14,10 +14,17 @@ def get_snowflake_data(connection):
     with connection.cursor() as cursor:
         return cursor.execute("select * from fruit_load_list").fetchall()
 
-def add_fruit(connection, new_fruit):
-    streamlit.text(f"Thank you for adding {new_fruit}")
+def add_fruits(connection, new_fruits):
+    streamlit.text(f"Thank you for adding {new_fruits}")
     with connection.cursor() as cursor:
-        cursor.execute("insert into fruit_load_list (fruit_name) values(%(new_fruit)s)", {'new_fruit': new_fruit})
+        new_fruits = new_fruits.split(",").strip()
+        query = ''
+        for fruit in new_fruits:
+            query += f"({fruit}),"
+        query = query[:-1]
+        streamlit.text(query)
+        cursor.execute("insert into fruit_load_list (fruit_name) values %(query)s", {'query': query})
+
 
 streamlit.title("My parents healthy menu")
 streamlit.header('Breakfast Menu')
@@ -25,10 +32,10 @@ streamlit.text('Omega 3 & Blueberry Oatmeal')
 streamlit.text('Kale, Spinach & Rocket Smoothie')
 streamlit.text('Hard-Boiled Free-Range Egg')
 
-new_fruit = streamlit.text_input("Which fruit would you like to add?", "")
-if streamlit.button("Add fruit"):
+new_fruits = streamlit.text_input("Which fruits would you like to add?", "")
+if streamlit.button("Add fruits"):
     snowflake_connection = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-    add_fruit(snowflake_connection, new_fruit)
+    add_fruits(snowflake_connection, new_fruits)
     snowflake_connection.close()
 
 if streamlit.button("Get fruit list"):
