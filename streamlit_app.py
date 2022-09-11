@@ -17,7 +17,7 @@ def get_snowflake_data(connection):
 def add_fruits(connection, new_fruits):
     streamlit.text(f"Thank you for adding {new_fruits}")
     with connection.cursor() as cursor:
-        cursor.execute("insert into fruit_load_list (fruit_name) values %(new_fruit)s", {'new_fruit': new_fruits})
+        cursor.execute("insert into fruit_load_list (fruit_name) values (%(new_fruit)s)", {'new_fruit': new_fruits})
         # new_fruits = new_fruits.split(",")
         # query = ''
         # for fruit in new_fruits:
